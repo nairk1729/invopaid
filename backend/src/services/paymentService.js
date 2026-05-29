@@ -127,12 +127,12 @@ module.exports = {
     status: "active",
     createdAt: new Date().toISOString()
   };
-
+ //url: `https://invopaid.app/pay/${paymentLink.id}`
   paymentLinks.push(paymentLink);
 
   return {
     paymentLink,
-    url: `https://invopaid.app/pay/${paymentLink.id}`
+    url: `${process.env.PAYMENT_BASE_URL}/${paymentLink.id}`
   };
 }
 
@@ -151,7 +151,8 @@ function createCheckoutSession(paymentLinkId) {
     amount: paymentLink.amount,
     currency: paymentLink.currency,
     status: "pending",
-    checkoutUrl: `https://checkout.invopaid.app/session/${Date.now()}`,
+    checkoutUrl: `${process.env.CHECKOUT_BASE_URL}/session/${Date.now()}`
+    //checkoutUrl: `https://checkout.invopaid.app/session/${Date.now()}`,
     createdAt: new Date().toISOString()
   };
 

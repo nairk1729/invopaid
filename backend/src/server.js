@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const paymentRoutes = require("./routes/paymentRoutes");
 
@@ -14,7 +16,9 @@ app.get("/health", (req, res) => {
 
 app.use("/", paymentRoutes);
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
+
+//const PORT = 4000;
 
 app.get('/test', (req, res) => {
   res.send('Backend is working');
