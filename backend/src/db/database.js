@@ -23,6 +23,8 @@ db.prepare(`
     currency TEXT NOT NULL,
     status TEXT NOT NULL,
     checkout_url TEXT NOT NULL,
+    provider TEXT,
+    provider_session_id TEXT,
     created_at TEXT NOT NULL,
     updated_at TEXT,
     FOREIGN KEY (payment_link_id) REFERENCES payment_links(id)

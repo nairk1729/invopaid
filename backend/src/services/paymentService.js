@@ -1,5 +1,6 @@
 //const { paymentLinks, transactions } = require("../store/memoryStore");
 const db = require("../db/database");
+const { getPaymentProvider } = require("../providers/providerFactory");
 
 function createPaymentLink(data) {
   const paymentLink = {
@@ -45,7 +46,7 @@ function getPaymentLinkById(id) {
     createdAt: row.created_at
   };
 }
-
+/*
 function createCheckoutSession(paymentLinkId) {
   const paymentLink = getPaymentLinkById(paymentLinkId);
 
@@ -72,6 +73,86 @@ function createCheckoutSession(paymentLinkId) {
 
   return transaction;
 }
+*/
+
+function createCheckoutSession(paymentLinkId) {
+  const paymentLink = getPaymentLinkById(paymentLinkId);
+
+  if (!paymentLink) return null;
+
+  const transactionId = `txn_${Date.now()}`;
+
+  const provider = getPaymentProvider();
+
+  console.log("Provider:", provider);
+  console.log("createCheckoutSession:", provider.createCheckoutSession);
+
+  const providerSession = provider.createCheckoutSession({
+    transactionId,
+    paymentLink
+  });
+
+  const transaction = {
+    id: transactionId,
+    paymentLinkId: paymentLink.id,
+    amount: paymentLink.amount,
+    currency: paymentLink.currency,
+    status: "pending",
+    checkoutUrl: providerSession.checkoutUrl,
+    provider: providerSession.provider,
+    providerSessionId: providerSession.providerSessionId,
+    createdAt: new Date().toISOString(),
+    updatedAt: null
+  };
+
+  db.prepare(`
+    INSERT INTO transactions (
+      id,
+      payment_link_id,
+      amount,
+      currency,
+      status,
+      checkout_url,
+      provider,
+      provider_session_id,
+      created_at,
+      updated_at
+    ) VALUES (
+      @id,
+      @paymentLinkId,
+      @amount,
+      @currency,
+      @status,
+      @checkoutUrl,
+      @provider,
+      @providerSessionId,
+      @createdAt,
+      @updatedAt
+    )
+  `).run(transaction);
+
+  return transaction;
+}
+/*
+function getTransactionById(id) {
+  const row = db.prepare(`
+    SELECT * FROM transactions WHERE id = ?
+  `).get(id);
+
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    paymentLinkId: row.payment_link_id,
+    amount: row.amount,
+    currency: row.currency,
+    status: row.status,
+    checkoutUrl: row.checkout_url,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
+  };
+}
+  */
 
 function getTransactionById(id) {
   const row = db.prepare(`
@@ -87,6 +168,8 @@ function getTransactionById(id) {
     currency: row.currency,
     status: row.status,
     checkoutUrl: row.checkout_url,
+    provider: row.provider,
+    providerSessionId: row.provider_session_id,
     createdAt: row.created_at,
     updatedAt: row.updated_at
   };
