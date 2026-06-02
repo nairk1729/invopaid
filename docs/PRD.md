@@ -1,4 +1,4 @@
-# PayFlow — Product Requirements Document (PRD)
+# Invopaid — Product Requirements Document (PRD)
 
 ## 1. Overview
 

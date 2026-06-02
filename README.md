@@ -1,137 +1,136 @@
-
-
 # Invopaid
 
-Hosted payment links and checkout flows for small businesses.
+Invopaid is a payment-link platform that allows businesses to create hosted payment links, share them with customers, and track payment transactions.
 
-## What is Invopaid?
-
-Invopaid helps small business owners create a payment link and accept payments without building complex checkout flows.
-
-## Why I’m building this
-
-Existing payment tools are often fragmented, overly complex, or designed for larger businesses. Invopaid focuses on a lightweight, hosted checkout experience for small merchants.
-
-## MVP
-
-- Payment link generation
-- Hosted checkout experience
-- Stripe-powered payment processing
-- Payment confirmation flow
-- Basic payment tracking
-
-## Tech Stack
-
-- Figma (wireframes & prototype)
-- GitHub
-- Planned: React / Next.js
-- Planned: Node.js backend APIs
-- Planned: Stripe integration
-
-## Vision
-
-Invopaid starts as a hosted payment link product and evolves into a provider-agnostic payments orchestration layer.
-
-Longer term, the platform will expand into operational intelligence for payments — helping merchants identify failed payments, overdue invoices, payout delays, and transaction anomalies through AI-assisted operational workflows.
-
-The initial focus remains a tight MVP centered on hosted payment flows and Stripe integration.
-
-## Architecture
-
-![Invopaid Architecture](diagrams/architecture-diagram.png)
+This MVP demonstrates a complete payment flow from payment-link creation through checkout and payment confirmation using a mock payment provider.
 
 ## Features
 
-- Create customer payment links
-- Hosted checkout experience
-- Invoice/payment summary
-- Secure checkout messaging
-- Copy/share payment links
-- Optional email receipt field
-- Mobile-friendly payment flow
+* Create payment links
+* Hosted checkout experience
+* Transaction tracking
+* Payment status updates through webhooks
+* SQLite persistence
+* Provider adapter architecture
+* React frontend and Node.js backend
 
-## Future Operational Intelligence
+## Tech Stack
 
-Post-MVP, Invopaid will explore AI-assisted operational tooling for payment workflows, including:
+### Frontend
 
-- Payment failure insights
-- Overdue invoice monitoring
-- Payout delay summaries
-- Transaction anomaly detection
-- Merchant operational alerts
-- Natural-language payment operations queries
+* React
+* React Router
+* Vite
 
-The goal is not autonomous financial decision-making, but improving visibility and operational efficiency for small businesses managing payments.
+### Backend
 
-## Product Flow
+* Node.js
+* Express
 
-Merchant creates payment link  
-→ Payment link generated  
-→ Customer opens hosted checkout  
-→ Customer completes payment  
-→ Payment confirmation displayed
+### Database
 
-## Roadmap
+* SQLite
+* better-sqlite3
 
-- Backend payment APIs
-- Stripe webhook handling
-- Merchant dashboard
-- Email receipt templates
-- Mobile responsive UI
-- Multi-provider payment routing
+## Architecture
 
-## Interactive Prototype
+Frontend → Backend API → Service Layer → Provider Adapter → SQLite Database
 
-[Figma Prototype](https://www.figma.com/proto/NcC501i8FuWXN8eEjLXKDD/Payflow-Wireframes?node-id=199-74&p=f&t=iJgwHwrQ0h33of6y-1&scaling=min-zoom&content-scaling=fixed&page-id=164%3A3&starting-point-node-id=199%3A74)
+The backend uses a layered architecture:
 
+* Routes
+* Controllers
+* Services
+* Provider Adapters
+* Database Layer
 
-## 🎨 Wireframes
+This separation makes it easier to integrate additional payment providers in the future.
 
-### Create Payment Link (Merchant)
+## API Endpoints
 
-This screen allows small business owners to generate a payment link by entering service details.
+### Create Payment Link
 
-![Create Payment Link](design/wireframes/Invopaid-Create-Payment-Link.png)
----
+POST /payment-links
 
-### Payment Link Generated
+Creates a new payment link.
 
-This screen shows the generated payment link and sharing options for merchants.
+### Get Payment Link
 
-![Payment Link Generated](design/wireframes/Invopaid-Payment-Link-Card.png)
+GET /payment-links/:id
 
-## Customer Checkout Page
+Returns payment-link details.
 
-Users receiving a payment link are taken to a clean hosted checkout experience with:
+### Create Checkout Session
 
-- Secure payment messaging
-- Payment summary
-- Card details form
-- CVV and expiry validation fields
-- Optional email receipt
-- Clear primary CTA
+POST /checkout-session
 
-### Checkout Experience
+Creates a transaction and checkout session.
 
-![Customer Checkout Page](design/wireframes/customer-checkout-page.png)
+### Get Transaction
+
+GET /transactions/:id
+
+Returns transaction details.
+
+### Payment Webhook
+
+POST /webhooks/payment
+
+Updates transaction status.
+
+## Screenshots
+
+### Create Payment Link
+
+![Create Payment Link](docs/screenshots/create-payment-link.png)
+
+### Checkout
+
+![Checkout](docs/screenshots/checkout-page.png)
 
 ### Payment Confirmation
 
-![Payment Confirmation](design/wireframes/Invopaid-Payment-Confirmation-Card.png)
+![Payment Confirmation](docs/screenshots/payment-confirmation.png)
 
-## Project Status
+## Local Development
 
-Invopaid is currently in active development.
+### Backend
 
-I'm building this in the open to explore:
-- Simple payments for small businesses
-- Payment provider abstraction
-- Checkout UX and conversion
-- Operational intelligence for payments
-- AI-assisted payment operations workflows
+```bash
+cd backend
+npm install
+npm run dev
+```
 
-The current focus is building a tight MVP around hosted payment links and checkout flows.
+### Frontend
 
-## Author
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-Designed and developed by Kavitha Nair.
+## Environment Variables
+
+Create a `.env` file in the backend directory:
+
+```env
+PORT=4000
+APP_NAME=invopaid-backend
+PAYMENT_PROVIDER=mock
+CHECKOUT_BASE_URL=https://checkout.invopaid.app
+PAYMENT_BASE_URL=https://invopaid.app/pay
+```
+
+## Future Enhancements
+
+* Stripe integration
+* User authentication
+* Merchant dashboard
+* Email notifications
+* Hosted payment pages
+* Transaction reporting
+
+## Status
+
+Invopaid MVP v1 completed.
