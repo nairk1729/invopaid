@@ -13,6 +13,7 @@ This MVP demonstrates a complete payment flow from payment-link creation through
 * SQLite persistence
 * Provider adapter architecture
 * React frontend and Node.js backend
+* Foundation for AI-assisted payment operations workflows
 
 ## Tech Stack
 
@@ -122,15 +123,25 @@ CHECKOUT_BASE_URL=https://checkout.invopaid.app
 PAYMENT_BASE_URL=https://invopaid.app/pay
 ```
 
-## Future Enhancements
+## Status
+
+Invopaid MVP v1 completed.
+
+## Future Roadmap
+
+### Payments Platform
 
 * Stripe integration
 * User authentication
 * Merchant dashboard
 * Email notifications
-* Hosted payment pages
 * Transaction reporting
 
-## Status
+### AI-Assisted Operations
 
-Invopaid MVP v1 completed.
+* Natural-language transaction search
+* Merchant operations copilot
+* Payment reconciliation assistance
+* Compliance workflow automation
+* Risk and anomaly monitoring
+* Cash-flow insights and forecasting
