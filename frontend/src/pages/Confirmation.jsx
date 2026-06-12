@@ -11,7 +11,7 @@ function Confirmation() {
     async function loadTransaction() {
       try {
         const response = await fetch(
-          `http://localhost:4000/transactions/${transactionId}`
+          `https://invopaid.onrender.com/transactions/${transactionId}`
         );
 
         const data = await response.json();
