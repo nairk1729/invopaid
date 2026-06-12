@@ -12,7 +12,7 @@ function Checkout() {
     async function loadPaymentLink() {
       try {
         const response = await fetch(
-          `http://localhost:4000/payment-links/${paymentLinkId}`
+          `https://invopaid.onrender.com/payment-links/${paymentLinkId}`
         );
 
         const data = await response.json();
@@ -35,7 +35,7 @@ function Checkout() {
     setError("");
 
     try {
-      const checkoutResponse = await fetch("http://localhost:4000/checkout-session", {
+      const checkoutResponse = await fetch("https://invopaid.onrender.com/checkout-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -54,7 +54,7 @@ function Checkout() {
 
       const transactionId = checkoutData.transaction.id;
 
-      const webhookResponse = await fetch("http://localhost:4000/webhooks/payment", {
+      const webhookResponse = await fetch("https://invopaid.onrender.com/webhooks/payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
