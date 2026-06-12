@@ -4,6 +4,17 @@ Invopaid is a payment-link platform that allows businesses to create hosted paym
 
 This MVP demonstrates a complete payment flow from payment-link creation through checkout and payment confirmation using a mock payment provider.
 
+## Live Demo
+
+Frontend:
+https://invopaid.vercel.app
+
+Backend:
+https://invopaid.onrender.com
+
+GitHub Repository:
+https://github.com/nairk1729/invopaid
+
 ## Features
 
 * Create payment links
@@ -126,6 +137,7 @@ PAYMENT_BASE_URL=https://invopaid.app/pay
 ## Status
 
 Invopaid MVP v1 completed.
+
 
 ## Future Roadmap
 
