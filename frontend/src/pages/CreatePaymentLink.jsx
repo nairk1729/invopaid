@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function CreatePaymentLink() {
   const [formData, setFormData] = useState({
@@ -59,6 +60,9 @@ function CreatePaymentLink() {
     <div style={{ maxWidth: "500px", margin: "80px auto", fontFamily: "Arial" }}>
       <h1>Create Payment Link</h1>
       <p>Create a hosted payment link for your customer.</p>
+      <p>
+  <Link to="/operations">View Operations Summary</Link>
+</p>
 
       <form onSubmit={handleSubmit}>
         <label>Business Name</label>
