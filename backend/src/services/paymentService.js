@@ -190,13 +190,63 @@ function updateTransactionStatus(transactionId, status) {
 
   return getTransactionById(transactionId);
 }
+function getOperationsSummary() {
+  const transactions = db.prepare(`
+    SELECT * FROM transactions
+  `).all();
 
+  const totalTransactions = transactions.length;
+
+  const succeededTransactions = transactions.filter(
+    (txn) => txn.status === "succeeded"
+  );
+
+  const pendingTransactions = transactions.filter(
+    (txn) => txn.status === "pending"
+  );
+
+  const totalSucceededAmount = succeededTransactions.reduce(
+    (sum, txn) => sum + txn.amount,
+    0
+  );
+
+  const insights = [];
+  const recommendedActions = [];
+
+  if (totalTransactions === 0) {
+    insights.push("No payment activity has been recorded yet.");
+    recommendedActions.push("Create and share a payment link to start collecting payments.");
+  }
+
+  if (succeededTransactions.length > 0) {
+    insights.push(
+      `${succeededTransactions.length} transaction(s) have succeeded with total volume of USD ${totalSucceededAmount}.`
+    );
+  }
+
+  if (pendingTransactions.length > 0) {
+    insights.push(`${pendingTransactions.length} transaction(s) are still pending.`);
+    recommendedActions.push("Follow up on pending transactions that have not completed.");
+  }
+
+  if (totalSucceededAmount >= 500) {
+    insights.push("Succeeded payment volume is above USD 500.");
+    recommendedActions.push("Review high-value payment activity for reconciliation.");
+  }
+
+  return {
+    summary: `You have ${totalTransactions} transaction(s): ${succeededTransactions.length} succeeded and ${pendingTransactions.length} pending.`,
+    insights,
+    recommendedActions
+  };
+}
 module.exports = {
   createPaymentLink,
   getPaymentLinkById,
   createCheckoutSession,
   getTransactionById,
-  updateTransactionStatus
+  updateTransactionStatus,
+  getOperationsSummary
 };
 
 /*function createPaymentLink(data) {

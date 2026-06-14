@@ -78,11 +78,17 @@ function handlePaymentWebhook(req, res) {
     transaction
   });
 }
+function getOperationsSummary(req, res) {
+  const summary = paymentService.getOperationsSummary();
+
+  res.json(summary);
+}
 
 module.exports = {
   createPaymentLink,
   getPaymentLink,
   createCheckoutSession,
   getTransaction,
-  handlePaymentWebhook
+  handlePaymentWebhook,
+  getOperationsSummary
 };
