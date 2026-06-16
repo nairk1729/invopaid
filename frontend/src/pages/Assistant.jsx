@@ -10,7 +10,7 @@ function Assistant() {
 
     try {
       const response = await fetch(
-        "http://localhost:4000/assistant/query",
+        "https://invopaid.onrender.com/assistant/query",
         {
           method: "POST",
           headers: {
