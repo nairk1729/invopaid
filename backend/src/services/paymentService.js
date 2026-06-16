@@ -229,7 +229,7 @@ function getOperationsSummary() {
     recommendedActions.push("Follow up on pending transactions that have not completed.");
   }
 
-  if (totalSucceededAmount >= 500) {
+  if (totalSucceededAmount >= 50000) {
     insights.push("Succeeded payment volume is above USD 500.");
     recommendedActions.push("Review high-value payment activity for reconciliation.");
   }

@@ -157,3 +157,11 @@ Invopaid MVP v1 completed.
 * Compliance workflow automation
 * Risk and anomaly monitoring
 * Cash-flow insights and forecasting
+
+### Merchant Copilot (AI Operations Assistant)
+
+* Answers operational questions about payment activity
+* Provides pending payment visibility
+* Uses transaction data stored in SQLite
+* Built using React, Express, and a service-based architecture
+* Designed to support future LLM integration

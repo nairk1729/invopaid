@@ -5,6 +5,7 @@ import CreatePaymentLink from "./pages/CreatePaymentLink";
 import Checkout from "./pages/Checkout";
 import Confirmation from "./pages/Confirmation";
 import OperationsDashboard from "./pages/OperationsDashboard";
+import Assistant from "./pages/Assistant";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/pay/:paymentLinkId" element={<Checkout />} />
         <Route path="/confirmation/:transactionId" element={<Confirmation />} />
         <Route path="/operations" element={<OperationsDashboard />} />
+        <Route path="/assistant" element={<Assistant />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
