@@ -57,13 +57,72 @@ function CreatePaymentLink() {
   }
 
   return (
-    <div style={{ maxWidth: "500px", margin: "80px auto", fontFamily: "Arial" }}>
+    <div style={{ maxWidth: "700px", margin: "80px auto", fontFamily: "Arial" }}>
       <h1>Create Payment Link</h1>
       <p>Create a hosted payment link for your customer.</p>
-      <p>
-  <Link to="/operations">View Operations Summary</Link>
-</p>
+      
+<div
+  style={{
+    border: "1px solid #ddd",
+    padding: "16px",
+    marginBottom: "24px"
+  }}
+>
+  <h3>Dashboard Links</h3>
 
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "16px",
+    flexWrap: "wrap",
+    marginTop: "16px"
+  }}
+>
+  <Link
+    to="/create"
+    style={{
+      border: "1px solid #666",
+      padding: "10px 18px",
+      textDecoration: "none",
+      borderRadius: "6px",
+      whiteSpace: "nowrap",
+      color: "#fff"
+    }}
+  >
+    Create Payment Link
+  </Link>
+
+  <Link
+    to="/operations"
+    style={{
+      border: "1px solid #666",
+      padding: "10px 18px",
+      textDecoration: "none",
+      borderRadius: "6px",
+      whiteSpace: "nowrap",
+      color: "#fff"
+    }}
+  >
+    Operations Summary
+  </Link>
+
+  <Link
+    to="/assistant"
+    style={{
+      border: "1px solid #666",
+      padding: "10px 18px",
+      textDecoration: "none",
+      borderRadius: "6px",
+      whiteSpace: "nowrap",
+      color: "#fff"
+    }}
+  >
+    Merchant Copilot
+  </Link>
+</div>
+</div>
       <form onSubmit={handleSubmit}>
         <label>Business Name</label>
         <input

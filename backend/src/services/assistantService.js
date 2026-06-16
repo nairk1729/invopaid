@@ -3,6 +3,27 @@ const db = require("../db/database");
 function answerQuestion(query) {
   const normalizedQuery = query.toLowerCase();
 
+  if (
+  normalizedQuery.includes("revenue") &&
+  normalizedQuery.includes("today")
+) {
+  return getRevenueTodayAnswer();
+}
+
+if (
+  normalizedQuery.includes("largest") ||
+  normalizedQuery.includes("biggest")
+) {
+  return getLargestPaymentAnswer();
+}
+
+if (
+  normalizedQuery.includes("revenue") &&
+  normalizedQuery.includes("month")
+) {
+  return getRevenueThisMonthAnswer();
+}
+
   if (normalizedQuery.includes("pending")) {
     return getPendingPaymentsAnswer();
   }
@@ -76,9 +97,79 @@ function getAttentionAnswer() {
     );
   }
 
+  
+
   return {
     answer: actions.join(" ")
   };
+}
+function getRevenueTodayAnswer() {
+  const transactions = db.prepare(`
+    SELECT *
+    FROM transactions
+    WHERE status = 'succeeded'
+  `).all();
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  const todaysTransactions = transactions.filter((txn) =>
+  txn.created_at && txn.created_at.slice(0, 10) === today
+  );
+
+  const totalRevenue = todaysTransactions.reduce(
+    (sum, txn) => sum + txn.amount,
+    0
+  );
+
+  return {
+    answer: `You collected USD ${totalRevenue} today from ${todaysTransactions.length} succeeded payment(s).`
+  };
+}
+
+function getRevenueThisMonthAnswer() {
+  const transactions = db.prepare(`
+    SELECT *
+    FROM transactions
+    WHERE status = 'succeeded'
+  `).all();
+
+  const currentMonth = new Date().toISOString().slice(0, 7);
+
+  const monthlyTransactions = transactions.filter((txn) =>
+  txn.created_at && txn.created_at.slice(0, 7) === currentMonth
+  );
+
+  const totalRevenue = monthlyTransactions.reduce(
+    (sum, txn) => sum + txn.amount,
+    0
+  );
+
+  return {
+    answer: `You collected USD ${totalRevenue} this month from ${monthlyTransactions.length} succeeded payment(s).`
+  };
+}
+
+function getLargestPaymentAnswer() {
+  const transactions = db.prepare(`
+    SELECT *
+    FROM transactions
+    WHERE status = 'succeeded'
+  `).all();
+
+  if (transactions.length === 0) {
+    return {
+      answer: "No successful payments have been recorded yet."
+    };
+  }
+
+  const largestPayment = transactions.reduce(
+    (largest, txn) =>
+      txn.amount > largest.amount ? txn : largest,
+    transactions[0]
+  );
+
+  return {
+answer: `Your largest successful payment this month was USD ${largestPayment.amount}.`  };
 }
 
 module.exports = {

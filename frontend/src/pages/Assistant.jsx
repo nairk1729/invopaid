@@ -80,6 +80,14 @@ function Assistant() {
 
 <button
   onClick={() =>
+    askQuestion("What was my largest payment this month?")
+  }
+>
+  What was my largest payment this month?
+</button>
+
+<button
+  onClick={() =>
     askQuestion("What needs my attention today?")
   }
 >
