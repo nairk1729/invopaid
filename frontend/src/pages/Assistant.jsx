@@ -4,6 +4,18 @@ import { Link } from "react-router-dom";
 function Assistant() {
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
+   const questionButtonStyle = {
+    display: "block",
+    width: "100%",
+    margin: "12px 0",
+    padding: "12px",
+    fontSize: "16px",
+    color: "#111",
+    backgroundColor: "#fff",
+    border: "1px solid #999",
+    borderRadius: "6px",
+    cursor: "pointer"
+  };
 
   async function askQuestion(question) {
     setLoading(true);
@@ -71,6 +83,7 @@ function Assistant() {
 </button>
 
 <button
+  style={questionButtonStyle}
   onClick={() =>
     askQuestion("How much revenue did I collect this month?")
   }
@@ -79,6 +92,7 @@ function Assistant() {
 </button>
 
 <button
+  style={questionButtonStyle}
   onClick={() =>
     askQuestion("What was my largest payment this month?")
   }
@@ -87,12 +101,14 @@ function Assistant() {
 </button>
 
 <button
+  style={questionButtonStyle}
   onClick={() =>
     askQuestion("What needs my attention today?")
   }
 >
   What needs my attention today?
 </button>
+  style={questionButtonStyle}
       </div>
 
       {loading && (
