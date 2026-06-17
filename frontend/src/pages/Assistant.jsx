@@ -67,6 +67,7 @@ function Assistant() {
         <h2>Common Questions</h2>
 
       <button
+       style={questionButtonStyle}
   onClick={() =>
     askQuestion("How many payments are still pending?")
   }
@@ -75,6 +76,7 @@ function Assistant() {
 </button>
 
 <button
+ style={questionButtonStyle}
   onClick={() =>
     askQuestion("How much revenue did I collect today?")
   }
@@ -108,7 +110,7 @@ function Assistant() {
 >
   What needs my attention today?
 </button>
-  style={questionButtonStyle}
+ 
       </div>
 
       {loading && (
