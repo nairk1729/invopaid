@@ -6,6 +6,7 @@ import Checkout from "./pages/Checkout";
 import Confirmation from "./pages/Confirmation";
 import OperationsDashboard from "./pages/OperationsDashboard";
 import Assistant from "./pages/Assistant";
+import CreateInvoice from "./pages/CreateInvoice";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/confirmation/:transactionId" element={<Confirmation />} />
         <Route path="/operations" element={<OperationsDashboard />} />
         <Route path="/assistant" element={<Assistant />} />
+        <Route path="/invoice" element={<CreateInvoice />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

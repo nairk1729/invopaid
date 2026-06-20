@@ -95,6 +95,21 @@ function CreatePaymentLink() {
   </Link>
 
   <Link
+  to="/invoice"
+  style={{
+    border: "1px solid #666",
+    padding: "10px 18px",
+    textDecoration: "none",
+    borderRadius: "6px",
+    whiteSpace: "nowrap",
+    color: "#fff",
+    backgroundColor: "#222"
+  }}
+>
+  Create Invoice
+</Link>
+
+  <Link
     to="/operations"
     style={{
       border: "1px solid #666",
@@ -121,6 +136,8 @@ function CreatePaymentLink() {
   >
     Merchant Copilot
   </Link>
+
+
 </div>
 </div>
       <form onSubmit={handleSubmit}>
