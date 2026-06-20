@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 function CreateInvoice() {
 const [invoice, setInvoice] = useState(() => ({
@@ -19,6 +21,7 @@ const [invoice, setInvoice] = useState(() => ({
   notes: "",
   paymentTerms: ""
 }));
+const invoiceRef = useRef(null);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -63,6 +66,29 @@ function getInvoiceTotal() {
     (sum, item) => sum + Number(item.amount || 0),
     0
   );
+}
+
+async function downloadInvoicePdf() {
+  const invoiceElement = invoiceRef.current;
+
+  if (!invoiceElement) {
+    return;
+  }
+
+  const canvas = await html2canvas(invoiceElement, {
+    scale: 2
+  });
+
+  const imageData = canvas.toDataURL("image/png");
+
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const imageWidth = pageWidth;
+  const imageHeight = (canvas.height * imageWidth) / canvas.width;
+
+  pdf.addImage(imageData, "PNG", 0, 0, imageWidth, imageHeight);
+  pdf.save(`${invoice.invoiceNumber}.pdf`);
 }
   return (
     <div style={{ maxWidth: "800px", margin: "80px auto", color: "white" }}>
@@ -150,6 +176,7 @@ function getInvoiceTotal() {
         marginBottom: "12px"
       }}
     >
+        
       <input
         name="description"
         placeholder="Service description"
@@ -192,24 +219,24 @@ function getInvoiceTotal() {
         />
       </div>
 
-      <div
-        style={{
-          backgroundColor: "white",
-          color: "#111",
-          padding: "24px",
-          marginTop: "32px"
-        }}
-      >
-       <div
-       
+     <div
   style={{
-    backgroundColor: "white",
     color: "#111",
-    padding: "32px",
-    marginTop: "32px",
-    textAlign: "left"
+    padding: "24px",
+    marginTop: "32px"
   }}
 >
+  <div
+    ref={invoiceRef}
+    style={{
+      backgroundColor: "white",
+      color: "#111",
+      padding: "32px",
+      marginTop: "32px",
+      textAlign: "left"
+    }}
+  >
+
   <h1 style={{ textAlign: "right", marginBottom: "24px" }}>
     INVOICE
   </h1>
@@ -302,7 +329,17 @@ gap: "48px",
 </div>
 
 </div>
-
+<button
+  type="button"
+  onClick={downloadInvoicePdf}
+  style={{
+    marginTop: "24px",
+    padding: "12px 20px",
+    cursor: "pointer"
+  }}
+>
+  Download PDF
+</button>
 <br />
 <Link to="/create">Back to Dashboard</Link>
 </div>
