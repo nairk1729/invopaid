@@ -155,30 +155,47 @@ async function downloadInvoicePdf() {
 />
 
 <div style={{ marginBottom: "20px" }}>
-  <label>Upload Logo</label>
+  <label>Business Logo</label>
+
   <input
     type="file"
-    accept="image/png, image/jpeg"
+    accept="image/png,image/jpeg"
     onChange={handleLogoUpload}
-    style={{ display: "block", marginTop: "8px" }}
   />
-  <p style={{ fontSize: "14px", color: "#aaa" }}>
-    PNG or JPG. Max size: 1MB.
-  </p>
+
+  <small
+    style={{
+      display: "block",
+      color: "#bbb",
+      marginTop: "6px"
+    }}
+  >
+    PNG/JPG, max 2MB
+    <br />
+    Recommended: 300×300px
+  </small>
 </div>
 
 <div style={{ marginBottom: "20px" }}>
-  <label>Upload Signature</label>
+  <label>Signature</label>
+
   <input
     type="file"
-    accept="image/png, image/jpeg"
+    accept="image/png,image/jpeg"
     onChange={handleSignatureUpload}
-    style={{ display: "block", marginTop: "8px" }}
   />
-<p style={{ fontSize: "14px", color: "#888" }}>
-  Upload a PNG/JPG signature only.
-  Recommended size: 800 × 300 pixels or smaller.
-</p>
+
+  <small
+    style={{
+      display: "block",
+      color: "#bbb",
+      marginTop: "6px"
+    }}
+  >
+    PNG/JPG, max 1MB
+    <br />
+    Recommended: transparent background
+  </small>
 </div>
 
       <div style={{ marginBottom: "20px" }}>
