@@ -6,6 +6,7 @@ import html2canvas from "html2canvas";
 function CreateInvoice() {
 const [invoice, setInvoice] = useState(() => ({
     businessName: "",
+    logo: "",
   invoiceNumber: `INV-${Date.now()}`,
   invoiceDate: new Date().toISOString().slice(0, 10),
   currency: "USD",
@@ -69,6 +70,30 @@ function getInvoiceTotal() {
   );
 }
 
+function handleLogoUpload(event) {
+  const file = event.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  if (file.size > 1024 * 1024) {
+    alert("Please upload a logo smaller than 1MB.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onloadend = () => {
+    setInvoice({
+      ...invoice,
+      logo: reader.result
+    });
+  };
+
+  reader.readAsDataURL(file);
+}
+
 async function downloadInvoicePdf() {
   const invoiceElement = invoiceRef.current;
 
@@ -102,6 +127,19 @@ async function downloadInvoicePdf() {
   value={invoice.businessName}
   onChange={handleChange}
 />
+
+<div style={{ marginBottom: "20px" }}>
+  <label>Upload Logo</label>
+  <input
+    type="file"
+    accept="image/png, image/jpeg"
+    onChange={handleLogoUpload}
+    style={{ display: "block", marginTop: "8px" }}
+  />
+  <p style={{ fontSize: "14px", color: "#aaa" }}>
+    PNG or JPG. Max size: 1MB.
+  </p>
+</div>
 
       <div style={{ marginBottom: "20px" }}>
         <label>Invoice Number</label>
@@ -267,16 +305,34 @@ async function downloadInvoicePdf() {
     alignItems: "start"
   }}
 >
+<div>
+  {invoice.logo && (
+    <img
+  src={invoice.logo}
+  alt="Business Logo"
+  style={{
+    maxWidth: "180px",
+    maxHeight: "120px",
+    objectFit: "contain",
+    borderRadius: "8px"
+  }}
+/>
+  )}
+
 <h2
   style={{
     color: "#444",
-    fontSize: "32px",
+    fontSize: "28px",
     fontWeight: "bold",
-    marginBottom: "20px"
+    marginTop: "8px",
+    marginBottom: "4px"
   }}
 >
   {invoice.businessName}
 </h2>
+</div>
+
+
   <div>
     <p><strong>Invoice To</strong></p>
     <p>{invoice.clientName}</p>
