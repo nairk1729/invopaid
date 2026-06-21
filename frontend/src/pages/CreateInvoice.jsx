@@ -64,6 +64,31 @@ function addLineItem() {
   });
 }
 
+function addLineItem() {
+  setInvoice({
+    ...invoice,
+    lineItems: [
+      ...invoice.lineItems,
+      {
+        description: "",
+        amount: ""
+      }
+    ]
+  });
+}
+
+// ADD IT HERE
+function formatAmount(amount) {
+  return Number(amount || 0).toLocaleString();
+}
+
+function getInvoiceTotal() {
+  return invoice.lineItems.reduce(
+    (sum, item) => sum + Number(item.amount || 0),
+    0
+  );
+}
+
 function getInvoiceTotal() {
   return invoice.lineItems.reduce(
     (sum, item) => sum + Number(item.amount || 0),
@@ -469,13 +494,13 @@ gap: "48px",
         }}
       >
         <span>{item.description}</span>
-        <span>{invoice.currency} {item.amount || 0}</span>
-      </div>
+<span>
+  {invoice.currency} {formatAmount(item.amount)}
+</span>      </div>
     ))}
 
   <p style={{ fontSize: "22px", marginTop: "24px", textAlign: "right" }}>
-    <strong>Total:</strong> {invoice.currency} {getInvoiceTotal()}
-  </p>
+<strong>Total:</strong> {invoice.currency} {formatAmount(getInvoiceTotal())}  </p>
 
   <p><strong>Payment Terms:</strong> {invoice.paymentTerms}</p>
   <p><strong>Notes:</strong> {invoice.notes}</p>
