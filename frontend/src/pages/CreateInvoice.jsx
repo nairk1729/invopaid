@@ -8,6 +8,7 @@ const [invoice, setInvoice] = useState(() => ({
     businessName: "",
   invoiceNumber: `INV-${Date.now()}`,
   invoiceDate: new Date().toISOString().slice(0, 10),
+  currency: "USD",
   projectStartDate: "",
   dueDate: "",
   clientName: "",
@@ -143,6 +144,21 @@ async function downloadInvoicePdf() {
     style={{ display: "block", width: "100%", padding: "10px" }}
   />
 </div>
+
+<div style={{ marginBottom: "20px" }}>
+  <label>Currency</label>
+  <select
+    name="currency"
+    value={invoice.currency}
+    onChange={handleChange}
+    style={{ display: "block", width: "100%", padding: "10px" }}
+  >
+    <option value="USD">USD</option>
+    <option value="INR">INR</option>
+    <option value="AED">AED</option>
+  </select>
+</div>
+
       <div style={{ marginBottom: "20px" }}>
         <label>Client Name</label>
         <input
@@ -274,11 +290,19 @@ async function downloadInvoicePdf() {
     <p><strong>Invoice Date</strong></p>
     <p>{invoice.invoiceDate}</p>
 
+{invoice.projectStartDate && (
+  <>
     <p><strong>Project Start Date</strong></p>
     <p>{invoice.projectStartDate}</p>
+  </>
+)}
 
+{invoice.dueDate && (
+  <>
     <p><strong>Due Date</strong></p>
     <p>{invoice.dueDate}</p>
+  </>
+)}
   </div>
 </div>
 
@@ -316,12 +340,12 @@ gap: "48px",
         }}
       >
         <span>{item.description}</span>
-        <span>USD {item.amount || 0}</span>
+        <span>{invoice.currency} {item.amount || 0}</span>
       </div>
     ))}
 
   <p style={{ fontSize: "22px", marginTop: "24px", textAlign: "right" }}>
-    <strong>Total:</strong> USD {getInvoiceTotal()}
+    <strong>Total:</strong> {invoice.currency} {getInvoiceTotal()}
   </p>
 
   <p><strong>Payment Terms:</strong> {invoice.paymentTerms}</p>
