@@ -123,12 +123,11 @@ function handleSignatureUpload(event) {
 async function downloadInvoicePdf() {
   const invoiceElement = invoiceRef.current;
 
-  if (!invoiceElement) {
-    return;
-  }
+  if (!invoiceElement) return;
 
   const canvas = await html2canvas(invoiceElement, {
-    scale: 2
+    scale: 2,
+    useCORS: true
   });
 
   const imageData = canvas.toDataURL("image/png");
@@ -136,12 +135,27 @@ async function downloadInvoicePdf() {
   const pdf = new jsPDF("p", "mm", "a4");
 
   const pageWidth = pdf.internal.pageSize.getWidth();
-  const imageWidth = pageWidth;
-  const imageHeight = (canvas.height * imageWidth) / canvas.width;
+  const pageHeight = pdf.internal.pageSize.getHeight();
 
-  pdf.addImage(imageData, "PNG", 0, 0, imageWidth, imageHeight);
+  const imgWidth = pageWidth;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  let heightLeft = imgHeight;
+  let position = 0;
+
+  pdf.addImage(imageData, "PNG", 0, position, imgWidth, imgHeight);
+  heightLeft -= pageHeight;
+
+  while (heightLeft > 0) {
+    position = heightLeft - imgHeight;
+    pdf.addPage();
+    pdf.addImage(imageData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+  }
+
   pdf.save(`${invoice.invoiceNumber}.pdf`);
 }
+
   return (
     <div style={{ maxWidth: "800px", margin: "80px auto", color: "white" }}>
       <h1>Create Invoice</h1>
