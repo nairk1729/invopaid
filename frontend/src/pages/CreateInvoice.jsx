@@ -7,6 +7,7 @@ function CreateInvoice() {
 const [invoice, setInvoice] = useState(() => ({
     businessName: "",
     logo: "",
+    signature: "",
   invoiceNumber: `INV-${Date.now()}`,
   invoiceDate: new Date().toISOString().slice(0, 10),
   currency: "USD",
@@ -94,6 +95,31 @@ function handleLogoUpload(event) {
   reader.readAsDataURL(file);
 }
 
+function handleSignatureUpload(event) {
+  const file = event.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  if (file.size > 1024 * 1024) {
+    alert("Please upload a signature smaller than 1MB.");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onloadend = () => {
+    setInvoice({
+      ...invoice,
+      signature: reader.result
+    });
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
 async function downloadInvoicePdf() {
   const invoiceElement = invoiceRef.current;
 
@@ -141,6 +167,20 @@ async function downloadInvoicePdf() {
   </p>
 </div>
 
+<div style={{ marginBottom: "20px" }}>
+  <label>Upload Signature</label>
+  <input
+    type="file"
+    accept="image/png, image/jpeg"
+    onChange={handleSignatureUpload}
+    style={{ display: "block", marginTop: "8px" }}
+  />
+<p style={{ fontSize: "14px", color: "#888" }}>
+  Upload a PNG/JPG signature only.
+  Recommended size: 800 × 300 pixels or smaller.
+</p>
+</div>
+
       <div style={{ marginBottom: "20px" }}>
         <label>Invoice Number</label>
         <input
@@ -150,6 +190,8 @@ async function downloadInvoicePdf() {
           style={{ display: "block", width: "100%", padding: "10px" }}
         />
       </div>
+
+
 <div style={{ marginBottom: "20px" }}>
   <label>Invoice Date</label>
   <input
@@ -406,7 +448,38 @@ gap: "48px",
 
   <p><strong>Payment Terms:</strong> {invoice.paymentTerms}</p>
   <p><strong>Notes:</strong> {invoice.notes}</p>
+  {invoice.signature && (
+  <div
+    style={{
+      marginTop: "40px",
+      textAlign: "right"
+    }}
+  >
+    <img
+      src={invoice.signature}
+      alt="Signature"
+      style={{
+        maxWidth: "180px",
+        maxHeight: "80px",
+        objectFit: "contain"
+      }}
+    />
+
+    <div
+      style={{
+        borderTop: "1px solid #999",
+        width: "220px",
+        marginLeft: "auto",
+        marginTop: "8px",
+        paddingTop: "6px"
+      }}
+    >
+      Authorized Signature
+    </div>
+  </div>
+)}
 </div>
+
 
 </div>
 <button
