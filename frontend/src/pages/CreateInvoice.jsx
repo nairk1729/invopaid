@@ -164,9 +164,10 @@ async function downloadInvoicePdf() {
     pdf.addImage(imageData, "PNG", 0, position, imgWidth, imgHeight);
     heightLeft -= pageHeight;
   }
-
+  
+ await trackEvent("invoice_pdf_download", invoice.currency);
   pdf.save(`${invoice.invoiceNumber}.pdf`);
-  await trackEvent("invoice_pdf_download", invoice.currency);
+ 
 }
 
   return (
