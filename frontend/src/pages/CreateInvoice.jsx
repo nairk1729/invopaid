@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { trackEvent } from "../lib/analytics";
 
 function CreateInvoice() {
 const [invoice, setInvoice] = useState(() => ({
@@ -25,6 +26,9 @@ const [invoice, setInvoice] = useState(() => ({
   paymentTerms: ""
 }));
 const invoiceRef = useRef(null);
+useEffect(() => {
+  trackEvent("invoice_page_view");
+}, []);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -162,6 +166,7 @@ async function downloadInvoicePdf() {
   }
 
   pdf.save(`${invoice.invoiceNumber}.pdf`);
+  await trackEvent("invoice_pdf_download", invoice.currency);
 }
 
   return (
