@@ -64,18 +64,6 @@ function addLineItem() {
   });
 }
 
-function addLineItem() {
-  setInvoice({
-    ...invoice,
-    lineItems: [
-      ...invoice.lineItems,
-      {
-        description: "",
-        amount: ""
-      }
-    ]
-  });
-}
 
 // ADD IT HERE
 function formatAmount(amount) {
@@ -89,12 +77,7 @@ function getInvoiceTotal() {
   );
 }
 
-function getInvoiceTotal() {
-  return invoice.lineItems.reduce(
-    (sum, item) => sum + Number(item.amount || 0),
-    0
-  );
-}
+
 
 function handleLogoUpload(event) {
   const file = event.target.files[0];
@@ -383,7 +366,7 @@ async function downloadInvoicePdf() {
     style={{
       backgroundColor: "white",
       color: "#111",
-      padding: "32px",
+      padding: "24px",
       marginTop: "32px",
       textAlign: "left"
     }}
@@ -394,73 +377,99 @@ async function downloadInvoicePdf() {
   </h1>
   <hr style={{ marginBottom: "24px" }} />
 
-  <div
+ <div
   style={{
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "80px",
-    marginBottom: "32px",
+    gridTemplateColumns: "1.2fr 1fr 1fr",
+    gap: "24px",
+    marginBottom: "16px",
     alignItems: "start"
   }}
 >
+
+    
 <div>
   {invoice.logo && (
     <img
-  src={invoice.logo}
-  alt="Business Logo"
-  style={{
-    maxWidth: "180px",
-    maxHeight: "120px",
-    objectFit: "contain",
-    borderRadius: "8px"
-  }}
-/>
+      src={invoice.logo}
+      alt="Business Logo"
+      style={{
+        maxWidth: "120px",
+        maxHeight: "80px",
+        objectFit: "contain",
+        borderRadius: "8px"
+      }}
+    />
   )}
 
-<h2
-  style={{
-    color: "#444",
-    fontSize: "28px",
-    fontWeight: "bold",
-    marginTop: "8px",
-    marginBottom: "4px"
-  }}
->
-  {invoice.businessName}
-</h2>
+  <h2
+    style={{
+      color: "#444",
+      fontSize: "28px",
+      fontWeight: "bold",
+      marginTop: "8px",
+      marginBottom: "4px"
+    }}
+  >
+    {invoice.businessName}
+  </h2>
 </div>
 
 
   <div>
-    <p><strong>Invoice To</strong></p>
-    <p>{invoice.clientName}</p>
-    <p>{invoice.clientEmail}</p>
-  </div>
-
-  <div>
-    <p><strong>Invoice Number</strong></p>
-    <p>{invoice.invoiceNumber}</p>
-
-    <p><strong>Invoice Date</strong></p>
-    <p>{invoice.invoiceDate}</p>
-
-{invoice.projectStartDate && (
-  <>
-    <p><strong>Project Start Date</strong></p>
-    <p>{invoice.projectStartDate}</p>
-  </>
-)}
-
-{invoice.dueDate && (
-  <>
-    <p><strong>Due Date</strong></p>
-    <p>{invoice.dueDate}</p>
-  </>
-)}
-  </div>
+  <p><strong>Invoice To</strong></p>
+  <p>{invoice.clientName}</p>
+  <p>{invoice.clientEmail}</p>
 </div>
 
-<h3>Services & Deliverables</h3>
+  <div>
+  <p style={{ margin: "4px 0" }}>
+    <strong>Invoice Number</strong>
+  </p>
+
+  <p style={{ margin: "4px 0 12px 0" }}>
+    {invoice.invoiceNumber}
+  </p>
+
+  <p style={{ margin: "4px 0" }}>
+    <strong>Invoice Date</strong>
+  </p>
+
+  <p style={{ margin: "4px 0 12px 0" }}>
+    {invoice.invoiceDate}
+  </p>
+
+  {invoice.projectStartDate && (
+    <>
+      <p style={{ margin: "4px 0" }}>
+        <strong>Project Start Date</strong>
+      </p>
+
+      <p style={{ margin: "4px 0 12px 0" }}>
+        {invoice.projectStartDate}
+      </p>
+    </>
+  )}
+
+  {invoice.dueDate && (
+    <>
+      <p style={{ margin: "4px 0" }}>
+        <strong>Due Date</strong>
+      </p>
+
+      <p style={{ margin: "4px 0 12px 0" }}>
+        {invoice.dueDate}
+      </p>
+    </>
+  )}
+</div>
+</div> 
+<h3  style={{
+    marginTop: "12px",
+    marginBottom: "12px"
+  }}>
+    Services & Deliverables
+    </h3>
 
 <div
   style={{
@@ -477,11 +486,11 @@ async function downloadInvoicePdf() {
 </div>
 
 {invoice.lineItems
-  .filter(
-    (item) =>
-      item.description.trim() !== "" ||
-      item.amount !== ""
-  )
+ .filter(
+  (item) =>
+    item.description.trim() !== "" &&
+    item.amount !== ""
+)
   .map((item, index) => (
       <div
         key={index}
@@ -504,10 +513,10 @@ gap: "48px",
 
   <p><strong>Payment Terms:</strong> {invoice.paymentTerms}</p>
   <p><strong>Notes:</strong> {invoice.notes}</p>
-  {invoice.signature && (
+ {invoice.signature && (
   <div
     style={{
-      marginTop: "40px",
+      marginTop: "20px",
       textAlign: "right"
     }}
   >
@@ -515,8 +524,8 @@ gap: "48px",
       src={invoice.signature}
       alt="Signature"
       style={{
-        maxWidth: "180px",
-        maxHeight: "80px",
+        maxWidth: "130px",
+        maxHeight: "50px",
         objectFit: "contain"
       }}
     />
@@ -524,10 +533,11 @@ gap: "48px",
     <div
       style={{
         borderTop: "1px solid #999",
-        width: "220px",
+        width: "160px",
         marginLeft: "auto",
-        marginTop: "8px",
-        paddingTop: "6px"
+        marginTop: "4px",
+        paddingTop: "4px",
+        fontSize: "12px"
       }}
     >
       Authorized Signature
