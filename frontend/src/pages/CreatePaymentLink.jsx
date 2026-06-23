@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { trackEvent } from "../lib/analytics";
 
 function CreatePaymentLink() {
   useEffect(() => {
   trackEvent("payment_link_page_visit");
 }, []);
-  const [formData, setFormData] = useState({
-    businessName: "",
-    serviceTitle: "",
-    description: "",
-    amount: "",
-    currency: "USD"
-  });
+ const [searchParams] = useSearchParams();
+
+const [formData, setFormData] = useState({
+  businessName: searchParams.get("businessName") || "",
+  serviceTitle: searchParams.get("serviceTitle") || "",
+  description: "",
+  amount: searchParams.get("amount") || "",
+  currency: searchParams.get("currency") || "USD"
+});
 
   const [paymentUrl, setPaymentUrl] = useState("");
   const [paymentLinkId, setPaymentLinkId] = useState("");

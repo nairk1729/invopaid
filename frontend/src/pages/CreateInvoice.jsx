@@ -567,6 +567,30 @@ gap: "48px",
   Download PDF
 </button>
 <br />
+
+<Link
+  to={`/create?businessName=${encodeURIComponent(invoice.businessName)}&serviceTitle=${encodeURIComponent(
+    invoice.lineItems
+      .filter((item) => item.description.trim() !== "")
+      .map((item) => item.description)
+      .join(", ")
+  )}&amount=${getInvoiceTotal()}&currency=${invoice.currency}`}
+  style={{
+    display: "inline-block",
+    marginTop: "12px",
+    padding: "12px 20px",
+    border: "1px solid #666",
+    borderRadius: "6px",
+    textDecoration: "none",
+    color: "#fff",
+    backgroundColor: "#222"
+  }}
+>
+  Create Payment Link
+</Link>
+
+<br />
+
 <Link to="/create">Back to Dashboard</Link>
 </div>
   );
