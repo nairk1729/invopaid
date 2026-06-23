@@ -24,7 +24,7 @@ function createPaymentLink(data) {
 
   return {
     paymentLink,
-    url: `https://invopaid.app/pay/${paymentLink.id}`
+    url: `${process.env.PAYMENT_BASE_URL}/${paymentLink.id}`
   };
 }
 
