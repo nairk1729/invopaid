@@ -26,7 +26,15 @@ function Admin() {
         return;
       }
 
-      const visitorIds = new Set(data.map((event) => event.visitor_id));
+const visitorEvents = data.filter(
+  event =>
+    event.event_type === "invoice_page_visit" ||
+    event.event_type === "payment_link_page_visit"
+);
+
+const visitorIds = new Set(
+  visitorEvents.map(event => event.visitor_id)
+);
       const now = new Date();
 
 const startOfToday = new Date();
@@ -39,8 +47,14 @@ const todayEvents = data.filter(
   (event) => new Date(event.created_at) >= startOfToday
 );
 
+const todayVisitorEvents = todayEvents.filter(
+  event =>
+    event.event_type === "invoice_page_visit" ||
+    event.event_type === "payment_link_page_visit"
+);
+
 const todayVisitors = new Set(
-  todayEvents.map((event) => event.visitor_id)
+  todayVisitorEvents.map(event => event.visitor_id)
 ).size;
 
 const todayInvoices = todayEvents.filter(
@@ -51,8 +65,14 @@ const weekEvents = data.filter(
   (event) => new Date(event.created_at) >= sevenDaysAgo
 );
 
+const weekVisitorEvents = weekEvents.filter(
+  event =>
+    event.event_type === "invoice_page_visit" ||
+    event.event_type === "payment_link_page_visit"
+);
+
 const weekVisitors = new Set(
-  weekEvents.map((event) => event.visitor_id)
+  weekVisitorEvents.map(event => event.visitor_id)
 ).size;
 
 const weekInvoices = weekEvents.filter(

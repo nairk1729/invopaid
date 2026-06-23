@@ -5,6 +5,9 @@ import html2canvas from "html2canvas";
 import { trackEvent } from "../lib/analytics";
 
 function CreateInvoice() {
+      useEffect(() => {
+    trackEvent("invoice_page_visit");
+  }, []);
 const [invoice, setInvoice] = useState(() => ({
     businessName: "",
     logo: "",
@@ -26,9 +29,7 @@ const [invoice, setInvoice] = useState(() => ({
   paymentTerms: ""
 }));
 const invoiceRef = useRef(null);
-useEffect(() => {
-  trackEvent("invoice_page_view");
-}, []);
+
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -164,7 +165,7 @@ async function downloadInvoicePdf() {
     pdf.addImage(imageData, "PNG", 0, position, imgWidth, imgHeight);
     heightLeft -= pageHeight;
   }
-  
+
  await trackEvent("invoice_pdf_download", invoice.currency);
   pdf.save(`${invoice.invoiceNumber}.pdf`);
  
