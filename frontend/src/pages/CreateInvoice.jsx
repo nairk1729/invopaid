@@ -19,6 +19,13 @@ const [invoice, setInvoice] = useState(() => ({
   dueDate: "",
   clientName: "",
   clientEmail: "",
+ taxItems: [
+  {
+    label: "Tax",
+    amount: ""
+  }
+],
+dateError: "",
  lineItems: [
   {
     description: "",
@@ -56,6 +63,35 @@ const invoiceRef = useRef(null);
   });
 }
 
+function handleTaxItemChange(index, event) {
+  const { name, value } = event.target;
+
+  const updatedTaxItems = [...invoice.taxItems];
+
+  updatedTaxItems[index] = {
+    ...updatedTaxItems[index],
+    [name]: value
+  };
+
+  setInvoice({
+    ...invoice,
+    taxItems: updatedTaxItems
+  });
+}
+
+function addTaxItem() {
+  setInvoice({
+    ...invoice,
+    taxItems: [
+      ...invoice.taxItems,
+      {
+        label: "",
+        amount: ""
+      }
+    ]
+  });
+}
+
 function addLineItem() {
   setInvoice({
     ...invoice,
@@ -82,7 +118,20 @@ function getInvoiceTotal() {
   );
 }
 
+function getTaxAmount() {
+  return invoice.taxItems.reduce(
+    (sum, item) => sum + Number(item.amount || 0),
+    0
+  );
+}
 
+function getGrandTotal() {
+  return getInvoiceTotal() + getTaxAmount();
+}
+
+function hasTax() {
+  return getTaxAmount() > 0;
+}
 
 function handleLogoUpload(event) {
   const file = event.target.files[0];
@@ -132,9 +181,43 @@ function handleSignatureUpload(event) {
   reader.readAsDataURL(file);
 }
 
+function validateDates() {
+  if (
+    invoice.projectStartDate &&
+    invoice.dueDate &&
+    new Date(invoice.projectStartDate) > new Date(invoice.dueDate)
+  ) {
+    setInvoice({
+      ...invoice,
+      dateError: "Project Start Date cannot be after Due Date."
+    });
+    return false;
+  }
+
+  if (
+    invoice.invoiceDate &&
+    invoice.dueDate &&
+    new Date(invoice.dueDate) < new Date(invoice.invoiceDate)
+  ) {
+    setInvoice({
+      ...invoice,
+      dateError: "Due Date cannot be before Invoice Date."
+    });
+    return false;
+  }
+
+  setInvoice({
+    ...invoice,
+    dateError: ""
+  });
+
+  return true;
+}
 
 async function downloadInvoicePdf() {
   const invoiceElement = invoiceRef.current;
+
+  if (!validateDates()) return;
 
   if (!invoiceElement) return;
 
@@ -167,7 +250,14 @@ async function downloadInvoicePdf() {
   }
 
  await trackEvent("invoice_pdf_download", invoice.currency);
-  pdf.save(`${invoice.invoiceNumber}.pdf`);
+ const safeClientName = invoice.clientName
+  ? invoice.clientName
+      .trim()
+      .replace(/\s+/g, "_")        // spaces -> _
+      .replace(/[^\w-]/g, "")      // remove punctuation
+  : "Client";
+
+pdf.save(`${invoice.invoiceNumber}_${safeClientName}.pdf`);
  
 }
 
@@ -237,7 +327,6 @@ async function downloadInvoicePdf() {
         />
       </div>
 
-
 <div style={{ marginBottom: "20px" }}>
   <label>Invoice Date</label>
   <input
@@ -246,8 +335,12 @@ async function downloadInvoicePdf() {
     value={invoice.invoiceDate}
     onChange={handleChange}
     style={{ display: "block", width: "100%", padding: "10px" }}
+    
   />
 </div>
+{invoice.dateError && (
+  <p style={{ color: "red" }}>{invoice.dateError}</p>
+)}
 
 <div style={{ marginBottom: "20px" }}>
   <label>Project Start Date</label>
@@ -294,6 +387,8 @@ async function downloadInvoicePdf() {
           style={{ display: "block", width: "100%", padding: "10px" }}
         />
       </div>
+
+
 
       <div style={{ marginBottom: "20px" }}>
         <label>Client Email</label>
@@ -361,6 +456,45 @@ async function downloadInvoicePdf() {
         />
       </div>
 
+      
+ <div style={{ marginBottom: "20px" }}>
+  <h2>Taxes</h2>
+
+  {invoice.taxItems.map((item, index) => (
+    <div
+      key={index}
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 160px",
+        gap: "12px",
+        marginBottom: "12px"
+      }}
+    >
+      <input
+        name="label"
+        placeholder="Tax label, e.g. GST, VAT"
+        value={item.label}
+        onChange={(event) => handleTaxItemChange(index, event)}
+        style={{ padding: "10px" }}
+      />
+
+      <input
+        name="amount"
+        type="number"
+        placeholder="Tax amount"
+        value={item.amount}
+        onChange={(event) => handleTaxItemChange(index, event)}
+        style={{ padding: "10px" }}
+      />
+    </div>
+  ))}
+
+  <button type="button" onClick={addTaxItem}>
+    Add Additional Tax
+  </button>
+</div>
+
+
      <div
   style={{
     color: "#111",
@@ -380,7 +514,7 @@ async function downloadInvoicePdf() {
   >
 
   <h1 style={{ textAlign: "right", marginBottom: "24px" }}>
-    INVOICE
+    {hasTax() ? "TAX INVOICE" : "PROFORMA INVOICE"}
   </h1>
   <hr style={{ marginBottom: "24px" }} />
 
@@ -515,11 +649,41 @@ gap: "48px",
 </span>      </div>
     ))}
 
-  <p style={{ fontSize: "22px", marginTop: "24px", textAlign: "right" }}>
-<strong>Total:</strong> {invoice.currency} {formatAmount(getInvoiceTotal())}  </p>
+{invoice.taxItems
+  .filter((item) => Number(item.amount || 0) > 0)
+  .map((item, index) => (
+    <div
+      key={index}
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        marginTop: "12px"
+      }}
+    >
+      <span>{item.label || "Tax"}</span>
 
-  <p><strong>Payment Terms:</strong> {invoice.paymentTerms}</p>
-  <p><strong>Notes:</strong> {invoice.notes}</p>
+      <span>
+        {invoice.currency} {formatAmount(item.amount)}
+      </span>
+    </div>
+  ))}
+
+  <p style={{ fontSize: "22px", marginTop: "24px", textAlign: "right" }}>
+<strong>Total:</strong> {invoice.currency} {formatAmount(getGrandTotal())} </p>
+
+
+
+{invoice.paymentTerms.trim() !== "" && (
+  <p>
+    <strong>Payment Terms:</strong> {invoice.paymentTerms}
+  </p>
+)}
+
+{invoice.notes.trim() !== "" && (
+  <p>
+    <strong>Notes:</strong> {invoice.notes}
+  </p>
+)}
  {invoice.signature && (
   <div
     style={{
@@ -574,7 +738,7 @@ gap: "48px",
       .filter((item) => item.description.trim() !== "")
       .map((item) => item.description)
       .join(", ")
-  )}&amount=${getInvoiceTotal()}&currency=${invoice.currency}`}
+  )}&amount=${getGrandTotal()}&currency=${invoice.currency}`}
   style={{
     display: "inline-block",
     marginTop: "12px",
