@@ -4,6 +4,18 @@ Invopaid is a payment-link platform that allows businesses to create hosted paym
 
 This MVP demonstrates a complete payment flow from payment-link creation through checkout and payment confirmation using a mock payment provider.
 
+# Invopaid V1.2
+
+Invoice Generator
+- Professional PDF invoices
+- Business logo and signature support
+- Multiple services and deliverables
+- Optional multiple tax lines
+- Automatic Proforma vs Tax Invoice
+- Invoice date validation
+- One-click payment link creation from invoice
+- Client-friendly PDF filenames
+
 ## Live Demo
 
 Frontend:
