@@ -240,7 +240,7 @@ const fieldStyle = {
           marginBottom: "12px"
         }}
       >
-        Generate a Payment Link
+        Generate a Payment Link (Beta)
       </h2>
 
       <p
