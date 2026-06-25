@@ -126,12 +126,12 @@ const fieldStyle = {
 
       <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
         <span style={{ color: "#22c55e", fontWeight: "bold" }}>✓</span>
-        Shareable Payment Links
+        Shareable Payment Links (Beta)
       </span>
 
       <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
         <span style={{ color: "#22c55e", fontWeight: "bold" }}>✓</span>
-        Multiple Currencies
+        Multiple Currencies 
       </span>
 
       <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
@@ -205,7 +205,7 @@ const fieldStyle = {
             backgroundColor: "#222"
           }}
         >
-          Operations Summary
+          Operations Summary (Beta)
         </Link>
 
         <Link
@@ -220,7 +220,7 @@ const fieldStyle = {
             backgroundColor: "#222"
           }}
         >
-          Merchant Copilot
+          Merchant Copilot (Beta)
         </Link>
       </div>
     </div>
