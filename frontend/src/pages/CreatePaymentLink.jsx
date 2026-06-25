@@ -450,9 +450,26 @@ const fieldStyle = {
     </a>
   </div>
 
-  <p style={{ marginTop: "24px", fontSize: "14px" }}>
-    Built by Kavitha Nair
-  </p>
+ <p
+  style={{
+    marginTop: "24px",
+    fontSize: "14px",
+    color: "#888"
+  }}
+>
+  Built by Kavitha Nair •{" "}
+  <a
+    href="https://www.linkedin.com/in/kavithanair/"
+    target="_blank"
+    rel="noreferrer"
+    style={{
+      color: "#60a5fa",
+      textDecoration: "none"
+    }}
+  >
+    LinkedIn
+  </a>
+</p>
 </div>
   </div>
 );
