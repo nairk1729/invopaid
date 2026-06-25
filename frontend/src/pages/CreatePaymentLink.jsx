@@ -390,6 +390,70 @@ const fieldStyle = {
         </div>
       )}
     </div>
+    <div
+  style={{
+    marginTop: "80px",
+    paddingTop: "32px",
+    borderTop: "1px solid #444",
+    textAlign: "center",
+    color: "#aaa"
+  }}
+>
+  <h3>💬 Help Shape Invopaid</h3>
+
+  <p>
+    Invopaid is being improved with feedback from freelancers and independent
+    professionals.
+  </p>
+
+  <p>
+    Found a bug, have an idea, or want to request a feature?
+  </p>
+
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      gap: "16px",
+      flexWrap: "wrap",
+      marginTop: "24px"
+    }}
+  >
+    <a
+      href="https://docs.google.com/forms/d/e/1FAIpQLScPvqFx7TJTGluwUkfNk_kkKimX4MFqKGehB9VzgEpCiMLE1A/viewform?usp=publish-editor"
+      target="_blank"
+      rel="noreferrer"
+      style={{
+        backgroundColor: "#2563eb",
+        color: "#fff",
+        padding: "12px 20px",
+        borderRadius: "8px",
+        textDecoration: "none",
+        fontWeight: "600"
+      }}
+    >
+      Leave Feedback
+    </a>
+
+    <a
+      href="mailto:nair.kavitha1729@gmail.com?subject=Invopaid Feedback"
+      style={{
+        border: "1px solid #666",
+        color: "#fff",
+        padding: "12px 20px",
+        borderRadius: "8px",
+        textDecoration: "none",
+        fontWeight: "600"
+      }}
+    >
+      Email Me
+    </a>
+  </div>
+
+  <p style={{ marginTop: "24px", fontSize: "14px" }}>
+    Built by Kavitha Nair
+  </p>
+</div>
   </div>
 );
   
