@@ -61,135 +61,325 @@ const [formData, setFormData] = useState({
       setError("Unable to connect to backend");
     }
   }
-
+const fieldStyle = {
+  width: "85%",
+  margin: "0 auto 20px auto",
+  display: "block",
+  padding: "12px",
+  borderRadius: "6px",
+  border: "1px solid #555",
+  fontSize: "16px"
+};
   return (
-    <div style={{ maxWidth: "700px", margin: "80px auto", fontFamily: "Arial" }}>
-      <h1>Create Payment Link</h1>
-      <p>Create a hosted payment link for your customer.</p>
-      
-<div
-  style={{
-    border: "1px solid #ddd",
-    padding: "16px",
-    marginBottom: "24px"
-  }}
->
-  <h3>Dashboard Links</h3>
-
-<div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "16px",
-    flexWrap: "wrap",
-    marginTop: "16px"
-  }}
->
-  <Link
-    to="/create"
+  <div
     style={{
-      border: "1px solid #666",
-      padding: "10px 18px",
-      textDecoration: "none",
-      borderRadius: "6px",
-      whiteSpace: "nowrap",
-      color: "#fff"
+      maxWidth: "900px",
+      margin: "40px auto",
+      padding: "24px",
+      fontFamily: "Arial"
     }}
   >
-    Create Payment Link
-  </Link>
+    <div
+      style={{
+        textAlign: "center",
+        marginBottom: "48px"
+      }}
+    >
+      <h1
+        style={{
+          fontSize: "56px",
+          fontWeight: "700",
+          marginBottom: "12px"
+        }}
+      >
+        Invopaid
+      </h1>
 
-  <Link
-  to="/invoice"
-  style={{
-    border: "1px solid #666",
-    padding: "10px 18px",
-    textDecoration: "none",
-    borderRadius: "6px",
-    whiteSpace: "nowrap",
-    color: "#fff",
-    backgroundColor: "#222"
-  }}
->
-  Create Invoice
-</Link>
+      <h2
+        style={{
+          fontWeight: "normal",
+          color: "#ddd",
+          marginBottom: "24px"
+        }}
+      >
+        Professional invoices and simple payment links
+        <br />
+        for freelancers and independent professionals.
+      </h2>
+    </div>
 
-  <Link
-    to="/operations"
-    style={{
-      border: "1px solid #666",
-      padding: "10px 18px",
-      textDecoration: "none",
-      borderRadius: "6px",
-      whiteSpace: "nowrap",
-      color: "#fff"
-    }}
-  >
-    Operations Summary
-  </Link>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        gap: "40px",
+        flexWrap: "wrap",
+        marginBottom: "40px",
+        color: "#bbb",
+        fontSize: "18px"
+      }}
+    >
+      <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+        <span style={{ color: "#22c55e", fontWeight: "bold" }}>✓</span>
+        Professional PDF Invoices
+      </span>
 
-  <Link
-    to="/assistant"
-    style={{
-      border: "1px solid #666",
-      padding: "10px 18px",
-      textDecoration: "none",
-      borderRadius: "6px",
-      whiteSpace: "nowrap",
-      color: "#fff"
-    }}
-  >
-    Merchant Copilot
-  </Link>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+        <span style={{ color: "#22c55e", fontWeight: "bold" }}>✓</span>
+        Shareable Payment Links
+      </span>
 
+      <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+        <span style={{ color: "#22c55e", fontWeight: "bold" }}>✓</span>
+        Multiple Currencies
+      </span>
 
-</div>
-</div>
+      <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+        <span style={{ color: "#22c55e", fontWeight: "bold" }}>✓</span>
+        No Signup Required
+      </span>
+    </div>
+
+    <div
+      style={{
+        border: "1px solid #ddd",
+        padding: "16px",
+        marginBottom: "24px"
+      }}
+    >
+      <h3 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Explore Invopaid
+      </h3>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "16px",
+          flexWrap: "wrap",
+          marginTop: "16px"
+        }}
+      >
+        <Link
+          to="/create"
+          style={{
+            backgroundColor: "#2563eb",
+            color: "#fff",
+            border: "1px solid #2563eb",
+            padding: "10px 18px",
+            textDecoration: "none",
+            borderRadius: "6px",
+            whiteSpace: "nowrap",
+            fontWeight: "600",
+            boxShadow: "0 4px 12px rgba(37, 99, 235, 0.35)"
+          }}
+        >
+          Create Payment Link
+        </Link>
+
+        <Link
+          to="/invoice"
+          style={{
+            border: "1px solid #666",
+            padding: "10px 18px",
+            textDecoration: "none",
+            borderRadius: "6px",
+            whiteSpace: "nowrap",
+            color: "#fff",
+            backgroundColor: "#222"
+          }}
+        >
+          Create Invoice
+        </Link>
+
+        <Link
+          to="/operations"
+          style={{
+            border: "1px solid #666",
+            padding: "10px 18px",
+            textDecoration: "none",
+            borderRadius: "6px",
+            whiteSpace: "nowrap",
+            color: "#fff",
+            backgroundColor: "#222"
+          }}
+        >
+          Operations Summary
+        </Link>
+
+        <Link
+          to="/assistant"
+          style={{
+            border: "1px solid #666",
+            padding: "10px 18px",
+            textDecoration: "none",
+            borderRadius: "6px",
+            whiteSpace: "nowrap",
+            color: "#fff",
+            backgroundColor: "#222"
+          }}
+        >
+          Merchant Copilot
+        </Link>
+      </div>
+    </div>
+
+    <div
+      style={{
+        border: "1px solid #555",
+        borderRadius: "10px",
+        padding: "40px",
+        marginTop: "40px",
+        backgroundColor: "#1f2028"
+      }}
+    >
+      <h2
+        style={{
+          textAlign: "center",
+          marginBottom: "12px"
+        }}
+      >
+        Generate a Payment Link
+      </h2>
+
+      <p
+        style={{
+          textAlign: "center",
+          color: "#999",
+          marginBottom: "36px"
+        }}
+      >
+        Enter a few details and we'll generate a hosted payment page
+        you can securely share with your client.
+      </p>
+
       <form onSubmit={handleSubmit}>
-        <label>Business Name</label>
+        <label
+          style={{
+            display: "block",
+            textAlign: "center",
+            marginBottom: "8px",
+            marginTop: "16px"
+          }}
+        >
+          Business Name
+        </label>
+
         <input
           name="businessName"
           value={formData.businessName}
           onChange={handleChange}
+          style={fieldStyle}
         />
 
-        <label>Service Title</label>
+        <label
+          style={{
+            display: "block",
+            textAlign: "center",
+            marginBottom: "8px",
+            marginTop: "16px"
+          }}
+        >
+          Service Title
+        </label>
+
         <input
           name="serviceTitle"
           value={formData.serviceTitle}
           onChange={handleChange}
+          style={fieldStyle}
         />
 
-        <label>Description</label>
+        <label
+          style={{
+            display: "block",
+            textAlign: "center",
+            marginBottom: "8px",
+            marginTop: "16px"
+          }}
+        >
+          Description
+        </label>
+
         <textarea
           name="description"
           value={formData.description}
           onChange={handleChange}
+          style={fieldStyle}
         />
 
-        <label>Amount</label>
+        <label
+          style={{
+            display: "block",
+            textAlign: "center",
+            marginBottom: "8px",
+            marginTop: "16px"
+          }}
+        >
+          Amount
+        </label>
+
         <input
           name="amount"
           type="number"
           value={formData.amount}
           onChange={handleChange}
+          style={fieldStyle}
         />
 
-        <label>Currency</label>
-        <input
+        <label
+          style={{
+            display: "block",
+            textAlign: "center",
+            marginBottom: "8px",
+            marginTop: "16px"
+          }}
+        >
+          Currency
+        </label>
+
+        <select
           name="currency"
           value={formData.currency}
           onChange={handleChange}
-        />
+          style={fieldStyle}
+        >
+          <option value="USD">🇺🇸 USD - US Dollar</option>
+          <option value="INR">🇮🇳 INR - Indian Rupee</option>
+          <option value="AED">🇦🇪 AED - UAE Dirham</option>
+        </select>
 
-        <button type="submit">Generate Payment Link</button>
+        <button
+          type="submit"
+          style={{
+            width: "85%",
+            display: "block",
+            margin: "30px auto 0",
+            padding: "16px",
+            background: "#2563eb",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            fontSize: "18px",
+            fontWeight: "600",
+            cursor: "pointer"
+          }}
+        >
+          Create Payment Link →
+        </button>
       </form>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
 
       {paymentUrl && (
-        <div style={{ marginTop: "24px", padding: "16px", border: "1px solid #ddd" }}>
+        <div
+          style={{
+            marginTop: "24px",
+            padding: "16px",
+            border: "1px solid #ddd"
+          }}
+        >
           <h3>Payment Link Created</h3>
 
           <p>{paymentUrl}</p>
@@ -200,7 +390,9 @@ const [formData, setFormData] = useState({
         </div>
       )}
     </div>
-  );
+  </div>
+);
+  
 }
 
 export default CreatePaymentLink;

@@ -366,15 +366,22 @@ pdf.save(`${invoice.invoiceNumber}_${safeClientName}.pdf`);
 
 <div style={{ marginBottom: "20px" }}>
   <label>Currency</label>
+
   <select
     name="currency"
     value={invoice.currency}
     onChange={handleChange}
-    style={{ display: "block", width: "100%", padding: "10px" }}
+    style={{
+      display: "block",
+      width: "100%",
+      padding: "10px",
+      marginTop: "8px",
+      borderRadius: "6px"
+    }}
   >
-    <option value="USD">USD</option>
-    <option value="INR">INR</option>
-    <option value="AED">AED</option>
+    <option value="USD">🇺🇸 USD - US Dollar</option>
+    <option value="INR">🇮🇳 INR - Indian Rupee</option>
+    <option value="AED">🇦🇪 AED - UAE Dirham</option>
   </select>
 </div>
 
