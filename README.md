@@ -21,9 +21,6 @@ Invoice Generator
 Frontend:
 https://invopaid.vercel.app
 
-Backend:
-https://invopaid.onrender.com
-
 GitHub Repository:
 https://github.com/nairk1729/invopaid
 
